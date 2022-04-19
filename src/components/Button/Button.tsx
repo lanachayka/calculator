@@ -4,7 +4,7 @@ import './Button.css'
 type ButtonProps = {
   className: string,
   value: string | number,
-  onClick: (e) => void
+  onClick: (e: any) => void
 }
 
 const Button: React.FC<ButtonProps> = ({ className, value, onClick }) => {

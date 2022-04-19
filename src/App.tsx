@@ -76,7 +76,7 @@ const App: React.FC = () => {
 
   const equalsClickHandler = () => {
     if (calc.sign && calc.num) {
-      const math = (a, b, sign) =>
+      const math = (a:number, b:number, sign: string) =>
         sign === "+"
           ? a + b
           : sign === "-"
