@@ -5,6 +5,12 @@ import Screen from "./components/Screen/Screen";
 import ButtonBox from "./components/ButtonBox/ButtonBox";
 import Button from "./components/Button/Button";
 
+type calcType = {
+  sign: string,
+  num: number | string,
+  res: number | string,
+}
+
 const btnValues = [
   ["C", "+-", "%", "/"],
   [7, 8, 9, "X"],
@@ -13,21 +19,22 @@ const btnValues = [
   [0, ".", "="],
 ];
 
-const toLocaleString = (num) =>
+const toLocaleString = (num: number | string): string =>
   String(num).replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, "$1 ");
 
-const removeSpaces = (num) => num.toString().replace(/\s/g, "");
+const removeSpaces = (num: number | string): string => num.toString().replace(/\s/g, "");
 
-const App = () => {
-  let [calc, setCalc] = useState({
+const App: React.FC = () => {
+  let [calc, setCalc] = useState<calcType>({
     sign: "",
     num: 0,
     res: 0,
   });
 
-  const numClickHandler = (e) => {
+  const numClickHandler = (e: Event) => {
     e.preventDefault();
-    const value = e.target.innerHTML;
+    const target = e.target as Element;
+    const value = target.innerHTML;
 
     if (removeSpaces(calc.num).length < 16) {
       setCalc({
@@ -35,7 +42,7 @@ const App = () => {
         num:
           calc.num === 0 && value === "0"
             ? "0"
-            : removeSpaces(calc.num) % 1 === 0
+            : Number(removeSpaces(calc.num)) % 1 === 0
             ? toLocaleString(Number(removeSpaces(calc.num + value)))
             : toLocaleString(calc.num + value),
         res: !calc.sign ? 0 : calc.res,
@@ -43,9 +50,10 @@ const App = () => {
     }
   };
 
-  const commaClickHandler = (e) => {
+  const commaClickHandler = (e: Event) => {
     e.preventDefault();
-    const value = e.target.innerHTML;
+    const target = e.target as Element;
+    const value = target.innerHTML;
 
     setCalc({
       ...calc,
@@ -53,9 +61,10 @@ const App = () => {
     });
   };
 
-  const signClickHandler = (e) => {
+  const signClickHandler = (e: Event) => {
     e.preventDefault();
-    const value = e.target.innerHTML;
+    const target = e.target as Element;
+    const value = target.innerHTML;
 
     setCalc({
       ...calc,
@@ -97,8 +106,8 @@ const App = () => {
   const invertClickHandler = () => {
     setCalc({
       ...calc,
-      num: calc.num ? toLocaleString(removeSpaces(calc.num) * -1) : 0,
-      res: calc.res ? toLocaleString(removeSpaces(calc.res) * -1) : 0,
+      num: calc.num ? +toLocaleString(Number(removeSpaces(calc.num)) * -1) : 0,
+      res: calc.res ? +toLocaleString(Number(removeSpaces(calc.res)) * -1) : 0,
       sign: "",
     });
   };

@@ -2,7 +2,11 @@ import React from 'react'
 import { Textfit } from 'react-textfit';
 import './Screen.css'
 
-const Screen = ({value}) => {
+type ScreenProps = {
+  value:  string | number
+}
+
+const Screen: React.FC<ScreenProps> = ({value}) => {
     return (
       <Textfit className="screen" mode="single" max={70}>
         {value}

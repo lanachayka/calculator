@@ -1,7 +1,11 @@
 import React from 'react'
 import'./ButtonBox.css'
 
-const ButtonBox = ({children}) => {
+type ButtonBoxProps = {
+    children: React.ReactNode
+}
+
+const ButtonBox: React.FC<ButtonBoxProps> = ({children}) => {
     return <div className="buttonBox">{children}</div>;
 }
 
